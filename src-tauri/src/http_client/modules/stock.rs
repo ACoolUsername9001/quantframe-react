@@ -2,11 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use actix_web::{post, web, HttpResponse, Responder};
 
-use entity::stock::{item::create::CreateStockItem, riven::create::CreateStockRiven};
-use serde_json::json;
-use service::{StockRivenMutation, TransactionMutation};
-use tauri::{Manager, State};
-
+use super::super::types::{create_item::ItemPayload, create_riven::RivenPayload};
 use crate::{
     app::client::AppState,
     cache::client::CacheClient,
@@ -14,17 +10,16 @@ use crate::{
     notification::client::NotifyClient,
     qf_client::client::QFClient,
     settings::SettingsState,
-    utils::{
-        enums::ui_events::{UIEvent, UIOperationEvent},
-        modules::error::{self, AppError},
-    },
+    utils::modules::error::{self},
     wfm_client::{client::WFMClient, enums::order_type::OrderType},
     APP,
 };
+use serde_json::json;
+use tauri::{Manager, State};
 
 #[post("/add_riven")]
 pub async fn add_riven(riven: web::Json<RivenPayload>) -> impl Responder {
-    let component = "HTTPAddRiven";
+    let _component = "HTTPAddRiven";
     let app_handle = APP.get().expect("failed to get app handle");
     let app_state: State<Arc<Mutex<AppState>>> = app_handle.state();
     let app = app_state.lock().expect("failed to lock app state").clone();
@@ -70,7 +65,6 @@ pub async fn add_riven(riven: web::Json<RivenPayload>) -> impl Responder {
             HttpResponse::BadRequest().body(json!(e).to_string())
         }
     }
-
 }
 
 #[post("/add_item")]
