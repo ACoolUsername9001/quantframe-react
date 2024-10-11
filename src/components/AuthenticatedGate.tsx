@@ -14,7 +14,18 @@ const AuthenticatedGate: React.FC<Props> = ({
   goTo,
 }) => {
   const isAuthenticated: boolean = exclude ? !useIsAuthenticated() : useIsAuthenticated();
-  if (!isAuthenticated) return goTo ? <Navigate to={goTo} /> : (RenderError ? <RenderError /> : </>);
+  if (!isAuthenticated){
+    if (goTo){
+      return <Navigate to={goto}/>
+    }
+
+    if (RenderError){
+      return <RenderError/>
+    }
+
+    return </>
+  }
+
   return children ? children : <Outlet />;
 };
 export default AuthenticatedGate;
