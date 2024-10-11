@@ -23,7 +23,7 @@ const AuthenticatedGate: React.FC<Props> = ({
       return <RenderError/>
     }
 
-    return </>
+    return <div/>
   }
 
   return children ? children : <Outlet />;
