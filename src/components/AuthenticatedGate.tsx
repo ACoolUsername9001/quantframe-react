@@ -16,7 +16,7 @@ const AuthenticatedGate: React.FC<Props> = ({
   const isAuthenticated: boolean = exclude ? !useIsAuthenticated() : useIsAuthenticated();
   if (!isAuthenticated){
     if (goTo){
-      return <Navigate to={goto}/>
+      return <Navigate to={goTo}/>
     }
 
     if (RenderError){
